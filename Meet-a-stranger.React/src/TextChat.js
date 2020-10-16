@@ -30,7 +30,7 @@ class TextChat extends React.Component {
       }
 
       sendMessage = () => {
-        if(this.myMessage.value === "") return;
+        if(this.myMessage.value !== "") {
         var msg = {
             sender: "client",
             content: this.myMessage.value,
@@ -38,7 +38,8 @@ class TextChat extends React.Component {
         };
         this.myMessage.value = "";
         this.clientRef.sendMessage("/chat-app/chat/" + this.state.roomId + "/sendMessage", JSON.stringify(msg));
-      }
+        }
+    }
 
      renderChatData() {
         return this.state.messages.map((msg) => {

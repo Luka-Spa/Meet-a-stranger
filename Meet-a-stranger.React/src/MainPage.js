@@ -19,7 +19,7 @@ class MainPage extends React.Component {
         }
         else{
              return (
-             <Container className="pt-5 bg-white border rounded">
+             <Container className="pt-5 bg-white border rounded h-100">
                 <Row className="pt-5">
                     <Col>
                     <img src={logo} style={{height: "50vh"}} ></img>

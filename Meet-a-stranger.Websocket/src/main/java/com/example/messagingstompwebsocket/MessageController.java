@@ -8,6 +8,7 @@ import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.Payload;
 import org.springframework.messaging.simp.SimpMessageSendingOperations;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.CrossOrigin;
 
 
 
@@ -17,6 +18,7 @@ public class MessageController {
    @Autowired
     private SimpMessageSendingOperations messagingTemplate;
 	   
+	@CrossOrigin
     @MessageMapping("/chat/{roomId}/sendMessage")
     public void sendMessage(@DestinationVariable String roomId, @Payload Message chatMessage) {
     	if(!chatMessage.getContent().isEmpty()) {

@@ -5,7 +5,7 @@ function Navbar() {
   return (
     <nav className="navbar navbar-expand-lg navbar-light bg-white border rounded py-0 fixed-top">
   <a href="#">
-    <img src={logo} height="75" className="d-inline-block align-top py-2" alt=""></img>   
+    <img src={logo} height="75" className="d-inline-block align-top py-1" alt=""></img>   
     </a>
   <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
     <span className="navbar-toggler-icon"></span>
@@ -17,10 +17,10 @@ function Navbar() {
       </li>
     </ul> */}
     <ul class="navbar-nav ml-auto pr-5">
-    <li className="nav-item active">
+    <li className="nav-item active px-2">
         <a className="nav-link text-secondary mb-0" href="index.html">Home <span className="sr-only">(current)</span></a>
       </li>
-      <li class="nav-item dropdown">
+      <li class="nav-item dropdown px-2">
         <a class="nav-link dropdown-toggle text-secondary" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
           Friends
         </a>
