@@ -22,7 +22,7 @@ class MainPage extends React.Component {
              <Container className="pt-5 bg-white border rounded h-100">
                 <Row className="pt-5">
                     <Col>
-                    <img src={logo} style={{height: "50vh"}} ></img>
+                    <img src={logo} style={{height: "50vh"}} alt="first page" ></img>
                     <p className="h1 text-muted">Meet a stranger</p>
                     <Container className="px-5 text-justify">
                     <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris elit metus, eleifend sit amet purus vitae,

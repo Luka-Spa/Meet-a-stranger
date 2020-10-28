@@ -1,4 +1,4 @@
-import {Container, Row, Col, Button} from 'react-bootstrap';
+import {Container, Row} from 'react-bootstrap';
 import React from 'react';
 import VideoChat from './VideoChat';
 import TextChat from './TextChat';
