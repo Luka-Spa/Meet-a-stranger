@@ -1,19 +1,20 @@
-import {Row, Col} from 'react-bootstrap';
+import {Col} from 'react-bootstrap';
 import React from 'react';
 import Peer from 'peerjs';
 import io from 'socket.io-client';
 
 class VideoChat extends React.Component {
 
+    socket = null;
+    myPeer = null;
+    peers = {};
     constructor(){
         super();
         this.MyWebCam = React.createRef();
         this.StrangerWebCam = React.createRef();
     }
-    socket = io('http://localhost:3001');
-    myPeer = null;
-    peers = {};
-    componentDidMount(){
+    componentDidMount() {
+        this.socket = io(this.props.serverIp);
         navigator.mediaDevices.getUserMedia({
             video: true,
             audio: true
@@ -39,7 +40,7 @@ class VideoChat extends React.Component {
         
         this.socket.on('user-disconnected', userId => {
             if (this.peers[userId]) {
-                console.log(userId + "disconnected")
+                console.log(userId + " disconnected")
                 this.peers[userId].close()
             }
         })
@@ -52,9 +53,8 @@ class VideoChat extends React.Component {
         })
         call.on('close', () => {
         console.log("call closed");
-    })
-
-    this.peers[userId] = call
+        })
+        this.peers[userId] = call
     }
 
     addVideoStream(video, stream) {
@@ -66,17 +66,9 @@ class VideoChat extends React.Component {
 
     render() {
         return(
-            <Col xs={12} sm={12} md={5}>
-                <Row className="h-50 p-1">
-                    <Col xs={12}>
-                        <video className="w-100 h-100 border" ref={this.MyWebCam}></video>
-                    </Col>
-                </Row>
-                <Row className="h-50 p-1">
-                    <Col xs={12}>
-                        <video className="w-100 h-100 border" ref={this.StrangerWebCam}></video>    
-                    </Col>
-                </Row>
+            <Col xs={12} sm={12} md={5} className="h-100">
+                <video muted className="w-100 h-50 rounded bg-light" ref={this.MyWebCam}></video>
+                <video className="w-100 h-50 rounded bg-light" ref={this.StrangerWebCam}></video>    
             </Col>
         )
     }

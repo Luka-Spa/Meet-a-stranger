@@ -43,7 +43,7 @@ class TextChat extends React.Component {
 
      renderChatData() {
         return this.state.messages.map((msg) => {
-           if(msg === null) return;
+           if(msg === null) return <tr></tr>;
            const { content, sender, /*client, type, */ } = msg 
            return (
               <tr>
@@ -77,7 +77,7 @@ class TextChat extends React.Component {
                     </Col>
                 </Row>
                 <Row className="p-1">
-                    <SockJsClient url={this.props.ip} topics={['/chat-room/' + this.state.roomId]}
+                    <SockJsClient url={this.props.serverIp} topics={['/chat-room/' + this.state.roomId]}
                     onMessage={(msg) => { this.onMessage(msg); }}
                     onConnect={() => { this.onConnected(); }}
                     onConnectFailure={()=> { alert("Connection failed"); window.location.reload(false);}}
