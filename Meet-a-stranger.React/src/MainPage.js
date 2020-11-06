@@ -15,7 +15,7 @@ class MainPage extends React.Component {
 
     render() {
         if(!this.state.visible) {
-            return <Chatroom />;
+            return <Chatroom serverIp={"http://localhost:3001"} />;
         }
         else{
              return (

@@ -1,11 +1,9 @@
 import {Col} from 'react-bootstrap';
 import React from 'react';
 import Peer from 'peerjs';
-import io from 'socket.io-client';
 
 class VideoChat extends React.Component {
 
-    socket = null;
     myPeer = null;
     peers = {};
     constructor(){
@@ -13,40 +11,42 @@ class VideoChat extends React.Component {
         this.MyWebCam = React.createRef();
         this.StrangerWebCam = React.createRef();
     }
-    componentDidMount() {
-        this.socket = io(this.props.serverIp);
+    componentDidMount() {    
+        // this.myPeer = new Peer(this.props.id, { host: "localhost", path: "/peer", port: "3002"})  
+        this.myPeer = new Peer(this.props.id)  
+        this.myPeer.on('open', () => this.peerOnOpen());
         navigator.mediaDevices.getUserMedia({
             video: true,
             audio: true
         }).then(stream => {
         this.addVideoStream(this.MyWebCam.current, stream)
-        this.myPeer = new Peer(undefined )
-        this.myPeer.on('open', id => {
-            this.socket.emit('join-room', 3, id)
-        })  
-        this.myPeer.on('call', call => {
-            call.answer(stream)
-            call.on('stream', userVideoStream => {
-            this.addVideoStream(this.StrangerWebCam.current, userVideoStream)
+        this.myPeer.on('call', (call) => this.onCall(stream, call));
+        this.props.socket.on('peer-connected', (userId) => this.connectToNewUser(userId, stream)); 
         })
-        })       
-        this.socket.on('user-connected', userId => {
-            console.log("new user connected", userId)
-            this.connectToNewUser(userId, stream)
-        })
-        }).catch(error=>{
-            console.log("Error: ",error)
-        })
-        
-        this.socket.on('user-disconnected', userId => {
-            if (this.peers[userId]) {
-                console.log(userId + " disconnected")
-                this.peers[userId].close()
-            }
-        })
-        
+        this.props.socket.on('user-disconnected', (userId) => this.userDisconnected(userId));
+
     }
+    peerOnOpen() {
+        console.log("peer opened")
+        this.props.socket.emit('new-peer', this.props.id)    
+    }
+    
+    onCall(stream, call) {
+        call.answer(stream)
+        call.on('stream', userVideoStream => {
+        this.addVideoStream(this.StrangerWebCam.current, userVideoStream)
+        })
+    }
+    
+    userDisconnected(userId){
+        if (this.peers[userId]) {
+            console.log(userId + " disconnected");
+            this.peers[userId].close();
+        }
+    }
+
     connectToNewUser(userId, stream) {
+        console.log("new peer connected", userId)
         const call = this.myPeer.call(userId, stream)
         call.on('stream', userVideoStream => {
             this.addVideoStream(this.StrangerWebCam.current, userVideoStream)

@@ -4,8 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "node server.js & peerjs --port 3002",
-    "debug": "nodemon server.js & peerjs --port 3002"
+    "start": "node server.js",
+    "debug": "nodemon server.js & ",
+    "peer": "peerjs --port 3002 --path /peer"
   },
   "keywords": [],
   "author": "",

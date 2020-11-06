@@ -13,15 +13,15 @@ function Navbar() {
   <div className="collapse navbar-collapse" id="navbarNavDropdown">
     <ul className="navbar-nav ml-auto pr-5">
     <li className="nav-item active px-2">
-        <a className="nav-link text-secondary mb-0" href="index.html">Home <span className="sr-only">(current)</span></a>
+        <a className="nav-link text-secondary mb-0" href="/">Home <span className="sr-only">(current)</span></a>
       </li>
       <li className="nav-item dropdown px-2">
-        <a className="nav-link dropdown-toggle text-secondary" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        <a className="nav-link dropdown-toggle text-secondary" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
           Friends
         </a>
         <div className="dropdown-menu" aria-labelledby="navbarDropdown">
-          <a className="dropdown-item" href="#">Action</a>
-          <a className="dropdown-item" href="#">Another action</a>
+          <p className="dropdown-item">Action</p>
+          <p className="dropdown-item">Another action</p>
         </div>
       </li>
       <li className="nav-item p-2 d-flex justify-content-center align-items-center">

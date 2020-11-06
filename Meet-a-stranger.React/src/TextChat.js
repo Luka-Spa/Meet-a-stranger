@@ -1,14 +1,18 @@
 import {Form, Row, Col, Button} from 'react-bootstrap';
 import React from 'react';
-import SockJsClient from 'react-stomp';
 
 class TextChat extends React.Component {
     constructor() {
         super();
-        this.state = {roomId: 3, messages: [], myMessage: null};
+        this.state = {messages: [], myMessage: null};
+      }
+
+      componentDidMount(){
+          this.props.socket.on('chat-message',(msg) => this.onMessage(msg))
       }
 
       componentDidUpdate(){
+        this.props.socket.on('disconnect',() => console.log("helo"))
         document.getElementById('data').scrollTop = document.getElementById('data').scrollHeight;
       }
 
@@ -19,16 +23,6 @@ class TextChat extends React.Component {
           })
       }
 
-      onConnected(){
-          console.log("Connected to server");
-          var msg = {
-            sender: "System",
-            content: "Client Connected Successfully",
-            type: 'JOIN'
-          };
-          this.clientRef.sendMessage("/chat-app/chat/" + this.state.roomId + "/sendMessage", JSON.stringify(msg));
-      }
-
       sendMessage = () => {
         if(this.myMessage.value !== "") {
         var msg = {
@@ -37,16 +31,16 @@ class TextChat extends React.Component {
             type: 'CHAT'
         };
         this.myMessage.value = "";
-        this.clientRef.sendMessage("/chat-app/chat/" + this.state.roomId + "/sendMessage", JSON.stringify(msg));
+        this.props.socket.emit('sendMessage', msg);
        }
     }
 
      renderChatData() {
-        return this.state.messages.map((msg) => {
+        return this.state.messages.map((msg,i) => {
            if(msg === null) return <tr></tr>;
            const { content, sender, /*client, type, */ } = msg 
            return (
-              <tr>
+              <tr key={i}>
                  <td><b>{sender}: </b>{content}</td>
               </tr>
            )
@@ -55,7 +49,6 @@ class TextChat extends React.Component {
 
      onInputEnter = (event) => {
         if(event.key === 'Enter'){
-            console.log("passed function enter");
           this.sendMessage();
         }
     }
@@ -77,11 +70,6 @@ class TextChat extends React.Component {
                     </Col>
                 </Row>
                 <Row className="p-1">
-                    <SockJsClient url={this.props.serverIp} topics={['/chat-room/' + this.state.roomId]}
-                    onMessage={(msg) => { this.onMessage(msg); }}
-                    onConnect={() => { this.onConnected(); }}
-                    onConnectFailure={()=> { alert("Connection failed"); window.location.reload(false);}}
-                    ref={ (client) => { this.clientRef = client }} />
                     <Col xs={9}><Form.Control ref={ (myMessage) => { this.myMessage = myMessage }} onKeyPress={this.onInputEnter} type="text" placeholder="Message..." /></Col>
                     <Col xs={3}><Button className="w-100" onClick={this.sendMessage}>Send</Button></Col> 
                 </Row>
