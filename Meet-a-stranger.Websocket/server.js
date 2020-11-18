@@ -14,7 +14,8 @@ const io = require('socket.io')(server)
         socket.emit('room-joined');
         console.log("user " + userId + " joined in room " + roomId);
         socket.on('new-peer', (peerId) => handlePeer(roomId,peerId,socket));
-        socket.on('sendMessage', (message)=> onMessage(message, roomId));
+        socket.on('sendMessage', (message) => onMessage(message, roomId));
+        socket.on('disconnect', () => onDisconnect(userId, roomId));
   }
 
   function handlePeer(roomId,peerId,socket) {
@@ -25,6 +26,11 @@ const io = require('socket.io')(server)
   function onMessage(message, roomId){
     console.log("message recieved " + message.content + " in room " + roomId);
     io.in(roomId).emit('chat-message', message);
+  }
+
+  function onDisconnect(userId, roomId){
+    console.log("user: " + userId + " disconnected in room " + roomId);
+    io.in(roomId).emit('user-disconnected', userId);
   }
   
 server.listen(port)
