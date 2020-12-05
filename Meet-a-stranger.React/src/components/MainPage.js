@@ -1,7 +1,7 @@
 import { Container, Row, Col, Button } from "react-bootstrap";
 import React from "react";
 import { Link } from "react-router-dom";
-import logo from "./img/logo-main-page.svg";
+import logo from "../img/logo-main-page.svg";
 
 export default class MainPage extends React.Component {
   render() {
@@ -9,7 +9,7 @@ export default class MainPage extends React.Component {
       <Container className="pt-5 bg-white border rounded h-100">
         <Row className="pt-5">
           <Col>
-            <img src={logo} style={{ height: "50vh" }} alt="first page"></img>
+            <img src={logo} style={{ height: "400px" }} alt="first page"></img>
             <p className="h1 text-muted">Meet a stranger</p>
             <Container className="px-5 text-justify">
               <p>

@@ -1,6 +1,6 @@
 import { Container, Row, Col, Image } from "react-bootstrap";
 import React from "react";
-import ErrorImg from "./img/error.svg";
+import ErrorImg from "../img/error.svg";
 
 export default class Error extends React.Component {
   render() {

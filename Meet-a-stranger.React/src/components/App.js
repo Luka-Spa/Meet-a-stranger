@@ -2,10 +2,10 @@ import React from "react";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import "./App.css";
 
-import Navbar from "./components/Navbar";
-import MainPage from "./components/MainPage";
-import Rules from "./components/Rules";
-import Chatroom from "./components/Chatroom";
+import Navbar from "./Navbar";
+import MainPage from "./MainPage";
+import Rules from "./Rules";
+import Chatroom from "./Chatroom";
 
 export default function App() {
   return (

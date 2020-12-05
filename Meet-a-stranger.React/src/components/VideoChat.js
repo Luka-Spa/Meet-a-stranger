@@ -17,7 +17,6 @@ export default class VideoChat extends React.Component {
       path: "/peerjs/myapp",
       port: "443",
     });
-    // this.myPeer = new Peer(this.props.id);
     this.myPeer.on("open", () => this.peerOnOpen());
     this.myPeer.on("error", (error) => console.log(error));
     navigator.mediaDevices
