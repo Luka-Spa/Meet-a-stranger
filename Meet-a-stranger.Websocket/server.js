@@ -41,5 +41,4 @@ async function onDisconnect(userId, roomId) {
   console.log("user: " + userId + " disconnected in room " + roomId);
   io.in(roomId).emit("user-disconnected", userId);
 }
-
-server.listen(port);
+server.listen(process.env.PORT || port);
