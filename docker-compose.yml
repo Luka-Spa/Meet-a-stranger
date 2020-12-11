@@ -1,0 +1,13 @@
+version: "3"
+services:
+  react:
+    build: ./Meet-a-stranger.react
+    container_name: luka/meet-a-stranger.react
+    ports:
+      - 3000:3000
+
+  websocket:
+    build: ./Meet-a-stranger.websocket
+    container_name: luka/meet-a-stranger.socket
+    ports:
+      - 3001:3001

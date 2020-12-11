@@ -9,7 +9,7 @@ import Chatroom from "./Chatroom";
 
 export default function App() {
   return (
-    <Router forceRefresh={true}>
+    <Router forceRefresh>
       <div data-testid="main-app-div" className="App bg-light">
         <Navbar />
         <Switch>
