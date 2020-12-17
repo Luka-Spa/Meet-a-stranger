@@ -29,7 +29,9 @@ jobs:
         node-version: ${{ matrix.node-version }}
     - run: npm ci
     - run: npm test
-    - run: CI = false npm run build
+    - run: npm run build:ci
+      env:
+         CI: ""
       
   deploy:
     runs-on: ubuntu-latest
