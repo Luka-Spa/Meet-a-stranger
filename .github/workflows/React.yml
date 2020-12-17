@@ -36,10 +36,7 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     needs: build
-    defaults:
-      run:
-        working-directory: Meet-a-stranger.React
-        
+            
     steps:
       - uses: actions/checkout@v2
       - name: Add remote origin
