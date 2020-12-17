@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.meet.a.stranger.RestAPI.models.AuthenticationRequest;
 import com.meet.a.stranger.RestAPI.models.AuthenticationResponse;
-import com.meet.a.stranger.RestAPI.models.UserModel;
+import com.meet.a.stranger.RestAPI.models.UserEntity;
 import com.meet.a.stranger.RestAPI.services.MainUserDetailsService;
 import com.meet.a.stranger.RestAPI.util.JwtUtil;
 
@@ -43,11 +43,12 @@ public class AuthenticationController {
 				.loadUserByUsername(authenticationRequest.getUsername());
 		final String jwt = jwtTokenUtil.generateToken(userDetails);
 		
-		return ResponseEntity.ok(new AuthenticationResponse(jwt));
+		return ResponseEntity.ok(new AuthenticationResponse(jwt,userDetails.getUsername()));
 	}
 	
 	@RequestMapping(value = "/register", method = RequestMethod.POST)
-	public ResponseEntity<?> registerUser(@RequestBody UserModel user) throws Exception{
-		return ResponseEntity.ok(userDetailsService.saveUser(user));
+	public ResponseEntity<?> registerUser(@RequestBody UserEntity user) throws Exception{
+		userDetailsService.saveUser(user);
+		return ResponseEntity.ok("");
 	}
 }

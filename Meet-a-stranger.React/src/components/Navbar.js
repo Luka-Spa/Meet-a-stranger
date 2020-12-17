@@ -32,7 +32,7 @@ export default function Navbar() {
             </Link>
           </li>
           <li className="nav-item dropdown px-2">
-            <a
+            <span
               className="nav-link dropdown-toggle text-secondary"
               id="navbarDropdown"
               role="button"
@@ -41,16 +41,16 @@ export default function Navbar() {
               aria-expanded="false"
             >
               Friends
-            </a>
+            </span>
             <div className="dropdown-menu" aria-labelledby="navbarDropdown">
               <p className="dropdown-item">Action</p>
               <p className="dropdown-item">Another action</p>
             </div>
           </li>
           <li className="nav-item p-2 d-flex justify-content-center align-items-center">
-            <a>
+            <span>
               <i className="fa fa-bell mx-auto text-secondary"></i>
-            </a>
+            </span>
           </li>
         </ul>
       </div>

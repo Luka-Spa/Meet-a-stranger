@@ -1,4 +1,4 @@
-import { Container, Row, Col, Button } from "react-bootstrap";
+import { Container, Row, Col } from "react-bootstrap";
 import React from "react";
 
 export default class Rules extends React.Component {

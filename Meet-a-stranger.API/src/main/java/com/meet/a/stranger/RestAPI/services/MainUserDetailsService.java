@@ -29,12 +29,9 @@ public class MainUserDetailsService implements UserDetailsService {
 		return new MainUserDetails(user);
 	}
 	
-	public UserEntity saveUser(UserModel user) {
-		UserEntity eUser = new UserEntity();
-		eUser.setUsername(user.getUsername());
-		eUser.setEmail(user.getEmail());
-		eUser.setPassword(bcryptEncoder.encode(user.getPassword()));
-		return userRepository.save(eUser);
+	public UserEntity saveUser(UserEntity user) {
+		user.setPassword(bcryptEncoder.encode(user.getPassword()));
+		return userRepository.save(user);
 		
 	}
 

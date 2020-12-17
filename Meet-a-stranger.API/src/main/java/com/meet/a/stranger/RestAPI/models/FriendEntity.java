@@ -14,15 +14,14 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name = "users")
-public class UserEntity {
+@Table(name = "friends")
+public class FriendEntity {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
-	private String username;
-	private String password;
-	private String email;
+	private int user_id_1;
+	private int user_id_2;
 	
 	
 
