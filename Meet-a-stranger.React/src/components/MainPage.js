@@ -6,10 +6,15 @@ import logo from "../img/logo-main-page.svg";
 export default class MainPage extends React.Component {
   render() {
     return (
-      <Container className="pt-5 bg-white border rounded h-100">
+      <Container className="pt-5 bg-white border-bottom-0 rounded h-100">
         <Row className="pt-5">
           <Col>
-            <img src={logo} style={{ height: "400px" }} alt="first page"></img>
+            <img
+              src={logo}
+              className="img-fluid"
+              style={{ height: "400px" }}
+              alt="first page"
+            ></img>
             <p className="h1 text-muted">Meet a stranger</p>
             <Container className="px-5 text-justify">
               <p>
@@ -22,30 +27,28 @@ export default class MainPage extends React.Component {
                 mollis at sapien at porta. Maecenas non aliquet.
               </p>
             </Container>
-            <Row className="d-flex justify-content-center py-2">
-              <Col xs={6} sm={5} md={4}>
-                <Link to="/random-chat">
-                  <Button
-                    onClick={this.hidePage}
-                    className="mx-2 w-100"
-                    size="lg"
-                  >
-                    Connect
-                  </Button>
-                </Link>
-              </Col>
-              <Col xs={6} sm={5} md={4}>
-                <Link to="/rules">
-                  <Button
-                    className="mx-2 w-100 text-white"
-                    variant="warning"
-                    size="lg"
-                  >
-                    Rules
-                  </Button>
-                </Link>
-              </Col>
-            </Row>
+            <Container className="fixed-bottom border-right border-left bg-white">
+              <Row className="d-flex p-2 justify-content-center">
+                <Col xs={6} sm={5} md={4}>
+                  <Link to="/random-chat">
+                    <Button onClick={this.hidePage} className="w-100" size="lg">
+                      Connect
+                    </Button>
+                  </Link>
+                </Col>
+                <Col xs={6} sm={5} md={4}>
+                  <Link to="/rules">
+                    <Button
+                      className="w-100 text-white"
+                      variant="warning"
+                      size="lg"
+                    >
+                      Rules
+                    </Button>
+                  </Link>
+                </Col>
+              </Row>
+            </Container>
           </Col>
         </Row>
       </Container>

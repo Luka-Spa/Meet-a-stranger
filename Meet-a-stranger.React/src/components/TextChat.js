@@ -11,10 +11,16 @@ export default class TextChat extends React.Component {
   }
 
   componentDidMount() {
+    console.log("passed");
     this.props.socket.on("chat-message", (msg) => this.onMessage(msg));
     this.props.socket.on("user-disconnected", (userId) =>
       this.userDisconnected(userId)
     );
+  }
+  componentWillUnmount() {
+    this.props.socket.off("chat-message");
+    this.props.socket.off("user-disconnected");
+    this.setState({ messages: [] });
   }
 
   componentDidUpdate() {
@@ -32,6 +38,7 @@ export default class TextChat extends React.Component {
   }
 
   onMessage(msg) {
+    console.log("passed onMessage");
     this.setState({
       messages: [...this.state.messages, msg],
     });
@@ -40,7 +47,7 @@ export default class TextChat extends React.Component {
   sendMessage = (message) => {
     if (message !== "") {
       var msg = {
-        sender: "client",
+        sender: this.props.id.substring(0, 4),
         content: message,
         type: "CHAT",
       };

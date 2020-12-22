@@ -3,44 +3,63 @@ import React from "react";
 import Peer from "peerjs";
 
 export default class VideoChat extends React.Component {
-  myPeer = null;
-  peers = {};
+  state = {
+    myPeer: new Peer({
+      secure: true,
+      host: "peerjs-luka.herokuapp.com",
+      path: "/peerjs/myapp",
+      port: "443",
+    }),
+  };
+  peers = [];
   constructor() {
     super();
     this.MyWebCam = React.createRef();
     this.StrangerWebCam = React.createRef();
   }
   componentDidMount() {
-    this.myPeer = new Peer(this.props.id, {
-      secure: true,
-      host: "peerjs-luka.herokuapp.com",
-      path: "/peerjs/myapp",
-      port: "443",
-    });
-    this.myPeer.on("open", () => this.peerOnOpen());
-    this.myPeer.on("error", (error) => console.log(error));
-    navigator.mediaDevices
+    this.state.myPeer.on("open", () => this.peerOnOpen());
+    this.state.myPeer.on("error", (error) => console.log(error));
+    this.loadStream();
+  }
+  componentWillUnmount() {
+    const stream = this.MyWebCam.current.srcObject;
+    stream.getTracks().forEach((track) => track.stop());
+    this.MyWebCam.current.srcObject = null;
+    this.StrangerWebCam.current.srcObject = null;
+    this.peers = [];
+  }
+  peerOnOpen() {
+    console.log("peer opened");
+    this.props.socket.emit("new-peer", this.state.myPeer.id);
+    this.setState({ peerLoaded: true });
+  }
+  async loadStream() {
+    await navigator.mediaDevices
       .getUserMedia({
         video: true,
         audio: true,
       })
       .then((stream) => {
-        this.addVideoStream(this.MyWebCam.current, stream);
-        this.myPeer.on("call", (call) => this.onCall(stream, call));
-        this.props.socket.on("peer-connected", (userId) =>
-          this.connectToNewUser(userId, stream)
-        );
+        this.onStreamLoaded(stream);
       });
-    this.props.socket.on("user-disconnected", (userId) =>
-      this.userDisconnected(userId)
+  }
+
+  onStreamLoaded(stream) {
+    this.addVideoStream(this.MyWebCam.current, stream);
+    this.state.myPeer.on("call", (call) => this.onCall(stream, call));
+    this.props.socket.on("peer-connected", (userId) =>
+      this.connectToNewUser(userId, stream)
     );
   }
-
-  peerOnOpen() {
-    console.log("peer opened");
-    this.props.socket.emit("new-peer", this.props.id);
+  addVideoStream(video, stream) {
+    if (video !== null && stream !== null) {
+      video.srcObject = stream;
+      video.addEventListener("loadedmetadata", () => {
+        video.play();
+      });
+    } else console.warn("Stream could not be added to video element");
   }
-
   onCall(stream, call) {
     console.log("being called");
     call.answer(stream);
@@ -48,17 +67,9 @@ export default class VideoChat extends React.Component {
       this.addVideoStream(this.StrangerWebCam.current, userVideoStream);
     });
   }
-
-  userDisconnected(userId) {
-    if (this.peers[userId]) {
-      console.log(userId + " disconnected");
-      this.peers[userId].close();
-    }
-  }
-
   connectToNewUser(userId, stream) {
     console.log("new peer connected", userId);
-    const call = this.myPeer.call(userId, stream);
+    const call = this.state.myPeer.call(userId, stream);
     call.on("stream", (userVideoStream) => {
       this.addVideoStream(this.StrangerWebCam.current, userVideoStream);
     });
@@ -67,18 +78,16 @@ export default class VideoChat extends React.Component {
     });
     this.peers[userId] = call;
   }
-
-  addVideoStream(video, stream) {
-    video.srcObject = stream;
-    video.addEventListener("loadedmetadata", () => {
-      video.play();
-    });
+  userDisconnected(userId) {
+    if (this.peers[userId]) {
+      console.log(userId + " disconnected");
+      this.peers[userId].close();
+    }
   }
-
   render() {
     return (
       <Col xs={12} sm={12} md={5} className="h-100">
-        <video
+        <video 
           muted
           className="w-100 h-50 rounded bg-light"
           ref={this.MyWebCam}

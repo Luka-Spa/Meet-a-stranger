@@ -6,10 +6,20 @@ import Navbar from "./Navbar";
 import MainPage from "./MainPage";
 import Rules from "./Rules";
 import Chatroom from "./Chatroom";
+import io from "socket.io-client";
+import { v4 as uuidv4 } from "uuid";
 
 export default function App() {
+  const id = uuidv4();
+  const socket = io("http://localhost:3001");
+  socket.on("connect", () => onConnect());
+
+  const onConnect = () => {
+    console.log("Connected to socket");
+  };
+
   return (
-    <Router forceRefresh>
+    <Router>
       <div data-testid="main-app-div" className="App bg-light">
         <Navbar />
         <Switch>
@@ -17,8 +27,7 @@ export default function App() {
           <Route
             path="/random-chat"
             exact
-            component={() => <Chatroom serverIp={"http://localhost:3001"} />}
-            forceRefresh={true}
+            render={() => <Chatroom socket={socket} id={id} />}
           />
           <Route path="/rules" exact component={Rules} />
         </Switch>
