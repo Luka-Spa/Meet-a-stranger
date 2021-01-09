@@ -15,6 +15,7 @@ import org.springframework.security.web.authentication.WebAuthenticationDetailsS
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
+import com.meet.a.stranger.RestAPI.MainUserDetails;
 import com.meet.a.stranger.RestAPI.services.MainUserDetailsService;
 
 @Component
@@ -40,7 +41,7 @@ public class JwtFilter extends OncePerRequestFilter {
 		}
 		
 		if(username != null) {
-			UserDetails userDetails = this.userDetailsService.loadUserByUsername(username);
+			MainUserDetails userDetails = this.userDetailsService.loadUserByUsername(username);
 			if(jwtUtil.validateToken(jwt, userDetails)) {
 				UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken = new UsernamePasswordAuthenticationToken(
 						userDetails, null , userDetails.getAuthorities());

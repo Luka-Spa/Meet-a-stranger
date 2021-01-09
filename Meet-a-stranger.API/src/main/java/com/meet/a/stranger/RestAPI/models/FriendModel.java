@@ -5,6 +5,10 @@ import lombok.Data;
 @Data
 public class FriendModel {
 
-	private String id;
+	public FriendModel(int id, String username) {
+		this.id = id;
+		this.name = username;
+	}
+	private int id;
 	private String name;
 }
