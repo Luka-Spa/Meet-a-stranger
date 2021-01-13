@@ -24,7 +24,7 @@ export default class VideoChat extends React.Component {
   }
   componentWillUnmount() {
     const stream = this.MyWebCam.current.srcObject;
-    stream.getTracks().forEach((track) => track.stop());
+    if (stream) stream.getTracks().forEach((track) => track.stop());
     this.MyWebCam.current.srcObject = null;
     this.StrangerWebCam.current.srcObject = null;
     this.peers = [];
@@ -87,7 +87,7 @@ export default class VideoChat extends React.Component {
   render() {
     return (
       <Col xs={12} sm={12} md={5} className="h-100">
-        <video 
+        <video
           muted
           className="w-100 h-50 rounded bg-light"
           ref={this.MyWebCam}
