@@ -11,8 +11,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.meetastranger.api.MainUserDetails;
-import com.meetastranger.api.dtos.AuthenticationRequest;
-import com.meetastranger.api.dtos.AuthenticationResponse;
+import com.meetastranger.api.dtos.AuthenticationCreateDTO;
+import com.meetastranger.api.dtos.AuthenticationReadDTO;
 import com.meetastranger.api.models.UserEntity;
 import com.meetastranger.api.services.MainUserDetailsService;
 import com.meetastranger.api.util.JwtUtil;
@@ -31,7 +31,7 @@ public class AuthenticationController {
 	private JwtUtil jwtTokenUtil;
 
 	@RequestMapping(value = "/authenticate", method = RequestMethod.POST)
-	public ResponseEntity<?> createAuthenticationToken(@RequestBody AuthenticationRequest authenticationRequest)
+	public ResponseEntity<?> createAuthenticationToken(@RequestBody AuthenticationCreateDTO authenticationRequest)
 			throws Exception {
 		try {
 			authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(
@@ -42,7 +42,7 @@ public class AuthenticationController {
 		final MainUserDetails userDetails = userDetailsService.loadUserByUsername(authenticationRequest.getUsername());
 		final String jwt = jwtTokenUtil.generateToken(userDetails);
 
-		return ResponseEntity.ok(new AuthenticationResponse(jwt, userDetails.getUsername()));
+		return ResponseEntity.ok(new AuthenticationReadDTO(jwt, userDetails.getUsername()));
 	}
 
 	@RequestMapping(value = "/register", method = RequestMethod.POST)

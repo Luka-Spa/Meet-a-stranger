@@ -1,15 +1,15 @@
 package com.meetastranger.api.dtos;
 
-public class AuthenticationRequest {
+public class AuthenticationCreateDTO {
 	
 	private String username;
 	private String password;
 	
-	public AuthenticationRequest() {
+	public AuthenticationCreateDTO() {
 		
 	}
 	
-	public AuthenticationRequest(String username, String password) {
+	public AuthenticationCreateDTO(String username, String password) {
 		this.username = username;
 		this.password = password;
 	}
