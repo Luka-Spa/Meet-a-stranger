@@ -1,7 +1,6 @@
 package com.meetastranger.api.models;
 
 import java.util.HashSet;
-import java.util.Optional;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
@@ -60,10 +59,26 @@ public class UserEntity {
 	public int getId() {
 		return id;
 	}
+	
+	public void setId(int id) {
+		this.id = id;
+		
+	}
+	public void setUsername(String username) {
+		this.username = username;
+		
+	}
 
 	public void setPassword(String password) {
 		this.password = password;
 		
+	}
+	
+	public void setFollowers(Set<UserEntity> followers) {
+		this.followers = followers;
+	}
+	public void setFollowing(Set<UserEntity> following) {
+		this.following = following;
 	}
 
 

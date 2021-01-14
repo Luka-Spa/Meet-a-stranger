@@ -15,11 +15,8 @@ public class MainUserDetailsService implements UserDetailsService {
 	@Autowired
 	private PasswordEncoder bcryptEncoder;
 
+	@Autowired
 	private IUserRepository userRepository;
-
-	MainUserDetailsService(IUserRepository userRepository) {
-		this.userRepository = userRepository;
-	}
 
 	@Override
 	public MainUserDetails loadUserByUsername(String s) throws UsernameNotFoundException {

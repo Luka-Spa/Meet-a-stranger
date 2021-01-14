@@ -31,9 +31,11 @@ public class FriendsService {
 		var friend = userRepository.findById(friendId);
 		if(user.isPresent() && friend.isPresent()) {
 			if(user.get() != friend.get()) {
-				user.get().getFollowing().add(friend.get());
-				userRepository.save(user.get());
+				if(!user.get().getFollowing().contains(friend.get())) {
+					user.get().getFollowing().add(friend.get());
+					userRepository.save(user.get());
 				return true;
+				}
 			}
 		}
 		return false;

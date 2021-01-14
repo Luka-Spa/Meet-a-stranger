@@ -6,6 +6,7 @@ import org.modelmapper.ModelMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestHeader;
@@ -43,7 +44,9 @@ public class FriendsController {
 	public ResponseEntity<?> addFriend(@PathVariable int friendId,
 			@RequestHeader(name = "Authorization") String token) {
 		String jwt = token.substring(7);
-		friendsService.addFriend(Integer.parseInt(jwtUtil.extractId(jwt)),friendId);
-		return ResponseEntity.ok("");
+		if(friendsService.addFriend(Integer.parseInt(jwtUtil.extractId(jwt)),friendId)) {
+			return ResponseEntity.ok("");
+		}
+		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
 	}
 }
