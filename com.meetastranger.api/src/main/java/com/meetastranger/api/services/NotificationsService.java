@@ -2,6 +2,7 @@ package com.meetastranger.api.services;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +12,7 @@ import com.meetastranger.api.dtos.NotificationCreateDTO;
 import com.meetastranger.api.dtos.NotificationReadDTO;
 import com.meetastranger.api.models.NotificationEntity;
 import com.meetastranger.api.models.NotificationType;
+import com.meetastranger.api.models.UserEntity;
 import com.meetastranger.api.repositories.INotificationsRepository;
 import com.meetastranger.api.repositories.IUserRepository;
 
@@ -43,8 +45,8 @@ public class NotificationsService {
 	public boolean saveNotification(int userId, NotificationCreateDTO notification) {
 		if(userId != notification.getRecipient_id()) {
 			NotificationEntity notification_entity = new NotificationEntity();
-			var sender = userRepository.findById(userId);
-			var recipient = userRepository.findById(notification.getRecipient_id());
+			Optional<UserEntity> sender = userRepository.findById(userId);
+			Optional<UserEntity> recipient = userRepository.findById(notification.getRecipient_id());
 			if(sender.isPresent() && recipient.isPresent()) {
 				notification_entity.setRecipient(recipient.get());
 				notification_entity.setSender(sender.get());

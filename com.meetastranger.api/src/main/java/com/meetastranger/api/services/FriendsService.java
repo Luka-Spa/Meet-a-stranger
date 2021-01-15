@@ -2,11 +2,13 @@ package com.meetastranger.api.services;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.meetastranger.api.dtos.FriendReadDTO;
+import com.meetastranger.api.models.UserEntity;
 import com.meetastranger.api.repositories.IUserRepository;
 
 @Service
@@ -16,7 +18,7 @@ public class FriendsService {
 
 	public List<FriendReadDTO> getFriendsbyUserId(int userId) {
 		List<FriendReadDTO> friends = new ArrayList<FriendReadDTO>();
-		var user = userRepository.findById(userId);
+		Optional<UserEntity> user = userRepository.findById(userId);
 		if(user.isPresent()) {
 			user.get().getFollowers().forEach(_user ->{
 				if(user.get().getFollowing().contains(_user))
@@ -27,8 +29,8 @@ public class FriendsService {
 	}
 	
 	public boolean addFriend(int userId,int friendId) {
-		var user = userRepository.findById(userId);
-		var friend = userRepository.findById(friendId);
+		Optional<UserEntity>user = userRepository.findById(userId);
+		Optional<UserEntity> friend = userRepository.findById(friendId);
 		if(user.isPresent() && friend.isPresent()) {
 			if(user.get() != friend.get()) {
 				if(!user.get().getFollowing().contains(friend.get())) {

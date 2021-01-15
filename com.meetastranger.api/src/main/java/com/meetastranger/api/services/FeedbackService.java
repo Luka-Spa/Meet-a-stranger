@@ -3,6 +3,7 @@ package com.meetastranger.api.services;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +12,7 @@ import org.springframework.stereotype.Service;
 import com.meetastranger.api.dtos.FeedbackCreateDTO;
 import com.meetastranger.api.dtos.FeedbackReadDTO;
 import com.meetastranger.api.models.FeedbackEntity;
+import com.meetastranger.api.models.UserEntity;
 import com.meetastranger.api.repositories.IFeedbackRepository;
 import com.meetastranger.api.repositories.IUserRepository;
 
@@ -41,7 +43,7 @@ public class FeedbackService {
 	
 	public boolean saveFeedback(int userId, FeedbackCreateDTO feedback) {
 		FeedbackEntity feedback_entity = new FeedbackEntity();
-		var user = userRepository.findById(userId);
+		Optional<UserEntity> user = userRepository.findById(userId);
 		if(user.isPresent() && feedback != null) {
 			feedback_entity.setFrom_user(user.get());
 			feedback_entity.setContent(feedback.getContent());
