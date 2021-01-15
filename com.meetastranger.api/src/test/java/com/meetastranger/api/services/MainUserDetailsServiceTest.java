@@ -5,14 +5,17 @@ import static org.mockito.Mockito.when;
 import org.junit.Assert;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.mockito.ArgumentMatchers;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+import org.modelmapper.ModelMapper;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import com.meetastranger.api.MainUserDetails;
+import com.meetastranger.api.dtos.RegisterCreateDTO;
 import com.meetastranger.api.models.UserEntity;
 import com.meetastranger.api.repositories.IUserRepository;
 
@@ -27,6 +30,9 @@ public class MainUserDetailsServiceTest {
 	
 	@Mock
 	IUserRepository userRepository; 
+	
+	@Mock
+	ModelMapper mapper = new ModelMapper();
 	
 	@BeforeEach
 	void setUp() throws Exception{
@@ -67,15 +73,15 @@ public class MainUserDetailsServiceTest {
 	@Test
 	void saveUser() {
 		//Arrange
-		UserEntity user1 = new UserEntity();
+		RegisterCreateDTO user1 = new RegisterCreateDTO();
 		user1.setUsername("henk");
 		user1.setPassword("password");
-		when(userRepository.save(user1)).thenReturn(user1);
+		when(userRepository.save(ArgumentMatchers.any())).thenReturn(new UserEntity());
 		
 		//Act
-		UserEntity user = userDetailsService.saveUser(user1);
+		boolean isSaved = userDetailsService.saveUser(user1);
 		
 		//Assert
-		Assert.assertEquals(user1.getId(), user.getId());
+		Assert.assertTrue(isSaved);
 	}
 }

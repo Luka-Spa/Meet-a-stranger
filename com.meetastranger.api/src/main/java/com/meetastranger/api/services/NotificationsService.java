@@ -1,20 +1,16 @@
 package com.meetastranger.api.services;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.meetastranger.api.dtos.FeedbackCreateDTO;
-import com.meetastranger.api.dtos.FeedbackReadDTO;
 import com.meetastranger.api.dtos.NotificationCreateDTO;
 import com.meetastranger.api.dtos.NotificationReadDTO;
-import com.meetastranger.api.models.FeedbackEntity;
 import com.meetastranger.api.models.NotificationEntity;
-import com.meetastranger.api.repositories.IFeedbackRepository;
+import com.meetastranger.api.models.NotificationType;
 import com.meetastranger.api.repositories.INotificationsRepository;
 import com.meetastranger.api.repositories.IUserRepository;
 
@@ -52,7 +48,7 @@ public class NotificationsService {
 			if(sender.isPresent() && recipient.isPresent()) {
 				notification_entity.setRecipient(recipient.get());
 				notification_entity.setSender(sender.get());
-				notification_entity.setType(notification.getType());
+				notification_entity.setType(NotificationType.values()[notification.getType()]);
 				notificationsRepository.save(notification_entity);
 				return true;
 			}

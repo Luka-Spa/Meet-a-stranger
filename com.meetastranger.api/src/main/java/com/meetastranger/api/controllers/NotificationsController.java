@@ -2,6 +2,8 @@ package com.meetastranger.api.controllers;
 
 import java.util.List;
 
+import javax.validation.Valid;
+
 import org.modelmapper.ModelMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -45,7 +47,7 @@ public class NotificationsController {
 	}
 
 	@RequestMapping(value = "/notifications", method = RequestMethod.POST)
-	public ResponseEntity<?> createNofication(@RequestBody NotificationCreateDTO notification,
+	public ResponseEntity<?> createNofication(@Valid @RequestBody NotificationCreateDTO notification,
 			@RequestHeader(name = "Authorization") String token) {
 		String jwt = token.substring(7);
 		if(notificationsService.saveNotification(Integer.parseInt(jwtUtil.extractId(jwt)), notification)) {

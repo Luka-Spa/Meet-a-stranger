@@ -1,31 +1,18 @@
 package com.meetastranger.api.dtos;
 
+import javax.validation.constraints.NotBlank;
+
+import lombok.AllArgsConstructor;
+import lombok.Data;
+
+@Data
+@AllArgsConstructor
 public class AuthenticationCreateDTO {
 	
+	@NotBlank(message = "Name is mandatory")
 	private String username;
+	@NotBlank(message = "Password is mandatory")
 	private String password;
+
 	
-	public AuthenticationCreateDTO() {
-		
-	}
-	
-	public AuthenticationCreateDTO(String username, String password) {
-		this.username = username;
-		this.password = password;
-	}
-	
-	public String getUsername() {
-		return username;
-	}
-	
-	public String getPassword() {
-		return password;
-	}
-	
-	public void setPassword(String password) {
-		this.password = password;
-	}
-	public void setUsername(String username) {
-		this.username = username;
-	}
 }

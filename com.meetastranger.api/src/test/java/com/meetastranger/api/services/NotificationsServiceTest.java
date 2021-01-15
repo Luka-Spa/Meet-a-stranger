@@ -61,7 +61,7 @@ class NotificationsServiceTest {
 		
 		//Assert
 		Assert.assertTrue(notificationsDTO.size() == 1);
-		Assert.assertTrue(notificationsDTO.get(0).getId() == 1);
+		Assert.assertTrue(notificationsDTO.get(0).getId() == 0);
 		Assert.assertTrue(notificationsDTO.get(0).getSender_name() == notifications.get(0).getSender().getUsername());
 		
 	}
