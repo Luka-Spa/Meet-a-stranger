@@ -13,6 +13,9 @@ jobs:
   build:
 
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: Meet-a-stranger.React
 
     steps:
     - uses: actions/checkout@v2
