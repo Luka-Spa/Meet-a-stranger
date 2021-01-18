@@ -30,6 +30,7 @@ public class FriendsController {
 	@Autowired
 	private FriendsService friendsService;
 
+	@SuppressWarnings("unused")
 	@Autowired
 	private ModelMapper modelMapper;
 

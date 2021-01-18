@@ -17,11 +17,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.meetastranger.api.dtos.FeedbackCreateDTO;
-import com.meetastranger.api.dtos.FeedbackReadDTO;
 import com.meetastranger.api.dtos.NotificationCreateDTO;
 import com.meetastranger.api.dtos.NotificationReadDTO;
-import com.meetastranger.api.services.FeedbackService;
 import com.meetastranger.api.services.NotificationsService;
 import com.meetastranger.api.util.JwtUtil;
 
@@ -36,6 +33,7 @@ public class NotificationsController {
 	@Autowired
 	private NotificationsService notificationsService;
 
+	@SuppressWarnings("unused")
 	@Autowired
 	private ModelMapper modelMapper;
 
