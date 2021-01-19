@@ -22,8 +22,8 @@ import com.meetastranger.api.services.FeedbackService;
 import com.meetastranger.api.util.JwtUtil;
 
 @RestController
-@RequestMapping("/api")
 @CrossOrigin
+@RequestMapping("/api")
 public class FeedbackController {
 
 	@Autowired

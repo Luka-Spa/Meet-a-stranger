@@ -23,8 +23,8 @@ import com.meetastranger.api.services.NotificationsService;
 import com.meetastranger.api.util.JwtUtil;
 
 @RestController
-@RequestMapping("/api")
 @CrossOrigin
+@RequestMapping("/api")
 public class NotificationsController {
 
 	@Autowired
